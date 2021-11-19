@@ -38,12 +38,16 @@ public:
 	virtual ~Coordinates() = default;
 };
 
+class Vector;
+
 class Point: public Coordinates
 {
 public:
 	Point() = default;
 	Point(double x, double y): Coordinates(x, y) {}
 	virtual ~Point() = default;
+
+	Point& operator += (const Vector &v);
 };
 
 class Vector: public Coordinates
@@ -60,10 +64,34 @@ std::istream& operator >>(std::istream &in, Coordinates &c)
 	return in;
 }
 
-std::ostream& operator <<(std::ostream &out, const Coordinates& c)
+std::ostream& operator <<(std::ostream &out, const Coordinates &c)
 {
 	out << c.x << ',' << c.y;
 	return out;
+}
+
+std::ostream& operator <<(std::ostream &out, const Point &p)
+{
+	out << '(' << static_cast<const Coordinates&>(p) << ')';
+	return out;
+}
+
+std::ostream& operator <<(std::ostream &out, const Vector &p)
+{
+	out << '{' << static_cast<const Coordinates&>(p) << '}';
+	return out;
+}
+
+Point& Point::operator +=(const Vector &v)
+{
+	x += v.x;
+	y += v.y;
+	return *this;
+}
+
+Vector operator +(const Vector &v1, const Vector &v2)
+{
+	return Vector(v1.x + v2.x, v1.y + v2.y);
 }
 
 int main()
@@ -83,13 +111,12 @@ int main()
 	cout << "Введите координаты вектора v2: ";
 	cin >> v2;
 
-	v3.x = v1.x + v2.x + v0.x;
-	v3.y = v1.y + v2.y + v0.x;
-	cout << "v3 = {" << v3 << "}\n";
+	v3 = v0 + v1 + v2;
+	cout << "v3 = " << v3 << "\n";
 
-	p.x += v3.x;
-	p.y += v3.y;
-	cout << "p  = (" << p << ")\n";
+	p += v3;
+
+	cout << "p  = " << p << "\n";
 
 	return 0;
 }
