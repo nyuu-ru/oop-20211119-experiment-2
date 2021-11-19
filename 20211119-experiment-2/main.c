@@ -6,27 +6,31 @@
  */
 #include <stdio.h>
 
+typedef struct {
+	double x, y;
+} coords_t;
+
 int main()
 {
-	double p_x, p_y;
-	double v1_x, v1_y;
-	double v2_x, v2_y;
-	double v3_x, v3_y;
+	coords_t p;
+	coords_t v1;
+	coords_t v2;
+	coords_t v3;
 
 	printf("Введите координаты точки p: ");
-	scanf("%lf%lf", &p_x, &p_y);
+	scanf("%lf%lf", &p.x, &p.y);
 	printf("Введите координаты вектора v1: ");
-	scanf("%lf%lf", &v1_x, &v1_y);
+	scanf("%lf%lf", &v1.x, &v1.y);
 	printf("Введите координаты вектора v2: ");
-	scanf("%lf%lf", &v2_x, &v2_y);
+	scanf("%lf%lf", &v2.x, &v2.y);
 
-	v3_x = v1_x + v2_x;
-	v3_y = v1_y + v2_y;
-	printf("v3 = {%.3lf,%.3lf}\n", v3_x, v3_y);
+	v3.x = v1.x + v2.x;
+	v3.y = v1.y + v2.y;
+	printf("v3 = {%.3lf,%.3lf}\n", v3.x, v3.y);
 
-	p_x += v3_x;
-	p_y += v3_y;
-	printf("p = (%.3lf,%.3lf)\n", p_x, p_y);
+	p.x += v3.x;
+	p.y += v3.y;
+	printf("p = (%.3lf,%.3lf)\n", p.x, p.y);
 
 
 	return 0;
